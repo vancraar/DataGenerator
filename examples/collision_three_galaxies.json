@@ -1,0 +1,59 @@
+{
+  "seed": 67890,
+  "output": "collision_three_galaxies.csv",
+  "defaults": {
+    "mass": {
+      "particle_min": 0.03,
+      "particle_max": 20.0,
+      "black_hole_factor": 10.0
+    }
+  },
+  "galaxies": [
+    {
+      "name": "main",
+      "particles": 700,
+      "disk_radius": 16.0,
+      "disk_thickness": 1.5,
+      "position": [0.0, 0.0, 0.0],
+      "velocity": [0.0, 0.0, 0.0],
+      "disk_orientation": {
+        "inclination": 10.0,
+        "azimuth": 20.0
+      }
+    },
+    {
+      "name": "incoming",
+      "particles": 260,
+      "disk_radius": 6.0,
+      "disk_thickness": 0.9,
+      "orbit": {
+        "around": "main",
+        "mode": "crash",
+        "distance": 100.0,
+        "angle": 45.0,
+        "tangential_velocity_factor": 0.9,
+        "radial_velocity_factor": 0.8
+      },
+      "disk_orientation": {
+        "inclination": 65.0,
+        "azimuth": 140.0
+      }
+    },
+    {
+      "name": "outer_satellite",
+      "particles": 120,
+      "disk_radius": 4.0,
+      "disk_thickness": 0.5,
+      "orbit": {
+        "around": "incoming",
+        "mode": "stable",
+        "distance": 30.0,
+        "angle": 180.0
+      },
+      "disk_orientation": {
+        "inclination": 35.0,
+        "azimuth": 250.0
+      }
+    }
+  ]
+}

@@ -1,2 +1,2 @@
-dataclass-csv
-argparse
+# No third-party Python packages are required.
+# Both data generators only use the Python standard library.

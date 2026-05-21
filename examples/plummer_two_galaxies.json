@@ -1,0 +1,31 @@
+{
+  "seed": 13579,
+  "output": "plummer_two_galaxies.csv",
+  "systems": [
+    {
+      "name": "primary",
+      "particles": 800,
+      "total_mass": 8000.0,
+      "scale_radius": 8.0,
+      "cutoff_radius": 80.0,
+      "position": [0.0, 0.0, 0.0],
+      "velocity": [0.0, 0.0, 0.0]
+    },
+    {
+      "name": "secondary",
+      "particles": 300,
+      "total_mass": 3000.0,
+      "scale_radius": 5.0,
+      "cutoff_radius": 50.0,
+      "orbit": {
+        "around": "primary",
+        "mode": "crash",
+        "distance": 90.0,
+        "angle": 30.0,
+        "height": 10.0,
+        "tangential_velocity_factor": 0.6,
+        "radial_velocity_factor": 0.75
+      }
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "seed": 24680,
+  "output": "plummer_collision.csv",
+  "systems": [
+    {
+      "name": "main",
+      "particles": 700,
+      "total_mass": 7000.0,
+      "scale_radius": 8.0,
+      "cutoff_radius": 80.0,
+      "position": [0.0, 0.0, 0.0],
+      "velocity": [0.0, 0.0, 0.0]
+    },
+    {
+      "name": "incoming",
+      "particles": 260,
+      "total_mass": 2600.0,
+      "scale_radius": 4.0,
+      "cutoff_radius": 40.0,
+      "orbit": {
+        "around": "main",
+        "mode": "crash",
+        "distance": 100.0,
+        "angle": 45.0,
+        "tangential_velocity_factor": 0.7,
+        "radial_velocity_factor": 0.8
+      }
+    },
+    {
+      "name": "outer_satellite",
+      "particles": 120,
+      "total_mass": 1200.0,
+      "scale_radius": 2.5,
+      "cutoff_radius": 25.0,
+      "orbit": {
+        "around": "incoming",
+        "mode": "stable",
+        "distance": 30.0,
+        "angle": 180.0
+      }
+    }
+  ]
+}

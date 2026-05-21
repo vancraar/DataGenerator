@@ -1,0 +1,58 @@
+{
+  "seed": 12345,
+  "output": "stable_three_galaxies.csv",
+  "defaults": {
+    "mass": {
+      "particle_min": 0.03,
+      "particle_max": 20.0,
+      "black_hole_factor": 10.0
+    }
+  },
+  "galaxies": [
+    {
+      "name": "main",
+      "particles": 700,
+      "disk_radius": 16.0,
+      "disk_thickness": 1.5,
+      "position": [0.0, 0.0, 0.0],
+      "velocity": [0.0, 0.0, 0.0],
+      "disk_orientation": {
+        "inclination": 0.0,
+        "azimuth": 0.0
+      }
+    },
+    {
+      "name": "satellite_a",
+      "particles": 220,
+      "disk_radius": 6.0,
+      "disk_thickness": 0.8,
+      "orbit": {
+        "around": "main",
+        "mode": "stable",
+        "distance": 34.0,
+        "angle": 35.0
+      },
+      "disk_orientation": {
+        "inclination": 45.0,
+        "azimuth": 80.0
+      }
+    },
+    {
+      "name": "satellite_b",
+      "particles": 120,
+      "disk_radius": 4.0,
+      "disk_thickness": 0.5,
+      "orbit": {
+        "around": "main",
+        "mode": "stable",
+        "distance": 48.0,
+        "angle": 210.0,
+        "tangential_velocity_factor": 0.9
+      },
+      "disk_orientation": {
+        "inclination": 80.0,
+        "azimuth": 160.0
+      }
+    }
+  ]
+}
