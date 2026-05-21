@@ -1,14 +1,14 @@
-# Programming Project: Galaxy-Crash - Data Generation
+# N-Body Data Generation
 
-This repository contains a Python3 script to generate N-body initial conditions for one or more configurable galaxies.
+This repository contains two Python3 script to generate N-body initial conditions for one or more configurable galaxies.
 
 Each galaxy consists of one central black hole and a configurable number of disk particles. Galaxies can either be placed explicitly or orbit around another galaxy. Orbiting galaxies can be configured as stable satellites or as crash/merger candidates.
 
 ## Dependencies
 
-The generator only uses Python standard library modules. No additional packages are required.
+The generators only uses Python standard library modules. No additional packages are required.
 
-## Usage
+## Disk Generator 
 
 Generate a data set from a JSON scenario config:
 
