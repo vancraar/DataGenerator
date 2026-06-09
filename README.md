@@ -1,14 +1,22 @@
 # N-Body Data Generation
 
-This repository contains two Python3 script to generate N-body initial conditions for one or more configurable galaxies.
+This repository contains two Python3 scripts to generate N-body initial conditions for configurable particle systems.
 
-Each galaxy consists of one central black hole and a configurable number of disk particles. Galaxies can either be placed explicitly or orbit around another galaxy. Orbiting galaxies can be configured as stable satellites or as crash/merger candidates.
+`generate_data.py` creates rotating disk galaxies with one central black hole particle per galaxy. `generate_plummer_data.py` creates spherical Plummer systems without central black hole particles.
 
 ## Dependencies
 
-The generators only uses Python standard library modules. No additional packages are required.
+The generators only use Python standard library modules. No additional packages are required.
 
-## Disk Generator 
+## Disk Generator
+
+`generate_data.py` generates one or more disk-like galaxies. Each galaxy contains one central black hole particle and a configurable number of disk particles. The first particle of each galaxy is its central black hole; all remaining particles are sampled in a rotating disk.
+
+Disk particle positions are controlled by `disk_radius`, `disk_thickness`, and the optional `disk_orientation`. Disk particle velocities are initialized as circular velocities around the central black hole. Disk particle masses are sampled uniformly between `mass.particle_min` and `mass.particle_max`.
+
+The central black hole mass can be set explicitly with `mass.black_hole_mass`. If omitted, it is derived from the average disk particle mass, the number of disk particles, and `mass.black_hole_factor`.
+
+Galaxies can either be placed explicitly with `position` and `velocity` or placed relative to another galaxy with `orbit`. Orbiting galaxies can be configured as stable satellites, crash/merger candidates, static relative systems, or fully custom relative states.
 
 Generate a data set from a JSON scenario config:
 
@@ -58,12 +66,22 @@ Both generators write the same CSV output format:
 id,mass,pos_x,pos_y,pos_z,vel_x,vel_y,vel_z
 ```
 
+For PEPC gravity input, the repository also includes a small converter:
+
+```bash
+python3 convert_to_pepc_binary.py --input data.csv --output data.pepcbin
+```
+
+It strips the CSV header, ignores `id`, and writes a raw binary stream with
+`x, y, z, vx, vy, vz, mass` as double precision values in the order expected by
+`pepc-gravity`.
+
 The config formats are intentionally different:
 
 - `generate_data.py` uses `galaxies` with disk-specific fields such as `disk_radius`, `disk_thickness`, `disk_orientation`, and `mass.black_hole_factor`.
 - `generate_plummer_data.py` uses `systems` with Plummer-specific fields such as `total_mass`, `scale_radius`, `cutoff_radius`, `correct_center_of_mass`, and `correct_momentum`.
 
-## Config Format
+## Disk Generator Config Format
 
 Minimal example:
 
@@ -104,7 +122,7 @@ Minimal example:
 
 The `seed` field is required. The same config with the same seed produces the same CSV output.
 
-There is no global particle count. Each galaxy defines its own `particles` count. The first particle of each galaxy is its central black hole, all remaining particles are disk particles.
+There is no global particle count. Each galaxy defines its own `particles` count. The `particles` value includes the central black hole. For example, `particles: 700` creates one black hole particle and 699 disk particles.
 
 ## Galaxy Fields
 
@@ -196,6 +214,8 @@ For `custom`:
 
 The custom `position` and `velocity` are relative to the host galaxy.
 
+For `stable` and `crash`, the disk generator derives the base orbital speed from the host galaxy's `black_hole_mass`. The Plummer generator uses the host system's `total_mass` instead.
+
 ## Mass Settings
 
 The central black hole mass is calculated automatically by default:
@@ -203,6 +223,8 @@ The central black hole mass is calculated automatically by default:
 ```text
 black_hole_mass = average_particle_mass * max(particles - 1, 1) * black_hole_factor
 ```
+
+Only disk particles use the random `particle_min` to `particle_max` mass range. The central black hole is a separate particle with `black_hole_mass`.
 
 Default mass settings:
 
